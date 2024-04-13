@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { LoginTypes } from "./Login";
+import { AuthTypes } from "../Auth";
 import detectiveBg from "../../../assets/detectiveBg2.jpg";
 import detective from "../../../assets/detective-black.svg";
 import guilty from "../../../assets/mug-shot.svg";
@@ -7,7 +7,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { ROLES } from "../../../consts/Roles";
 import { Link } from "react-router-dom";
 
-export default function LoginDekstop({
+export default function AuthDekstopDetective({
   isPasswordVisible,
   password,
   role,
@@ -16,7 +16,7 @@ export default function LoginDekstop({
   setRole,
   setUsername,
   username,
-}: LoginTypes) {
+}: AuthTypes) {
   return (
     <section className="flex w-screen h-screen">
       <div className="h-full w-full relative">

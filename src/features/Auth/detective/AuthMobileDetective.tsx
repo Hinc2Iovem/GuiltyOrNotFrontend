@@ -1,4 +1,4 @@
-import { LoginTypes } from "./Login";
+import { AuthTypes } from "../Auth";
 import detectiveBg from "../../../assets/detectiveBg1.jpg";
 import detective from "../../../assets/detective-black.svg";
 import guilty from "../../../assets/mug-shot.svg";
@@ -7,7 +7,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { ROLES } from "../../../consts/Roles";
 import { Link } from "react-router-dom";
 
-export default function LoginMobile({
+export default function AuthMobileDetective({
   isPasswordVisible,
   password,
   role,
@@ -16,7 +16,7 @@ export default function LoginMobile({
   setRole,
   setUsername,
   username,
-}: LoginTypes) {
+}: AuthTypes) {
   return (
     <section className="h-screen relative">
       <img

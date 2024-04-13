@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { ROLES } from "../../../consts/Roles";
-import DivBgColor from "../../../components/DivBgColor";
-import { MATCHMEDIA } from "../../../consts/MatchMedia";
-import useMatchMedia from "../../../hooks/useMatchMedia";
-import LoginDekstop from "./LoginDekstop";
-import LoginMobile from "./LoginMobile";
-import LoginTablet from "./LoginTablet";
+import { ROLES } from "../../consts/Roles";
+import { MATCHMEDIA } from "../../consts/MatchMedia";
+import useMatchMedia from "../../hooks/useMatchMedia";
+import AuthDekstopDetective from "./detective/AuthDekstopDetective";
+import AuthMobileDetective from "./detective/AuthMobileDetective";
+import AuthTabletDetective from "./detective/AuthTabletDetective";
+import { Navigate, useLocation } from "react-router-dom";
 
-export type LoginTypes = {
+export type AuthTypes = {
   role: ROLES;
   setRole: React.Dispatch<React.SetStateAction<ROLES>>;
   isPasswordVisible: boolean;
@@ -18,7 +18,10 @@ export type LoginTypes = {
   setPassword: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function Login() {
+export default function Auth() {
+  const { pathname } = useLocation();
+  const detectiveOrGuilty = pathname.split("/")[2];
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -28,11 +31,10 @@ export default function Login() {
   const isTablet = useMatchMedia(MATCHMEDIA.Tablet);
   console.log("table: ", isTablet);
 
-  return (
+  return detectiveOrGuilty === "detective" ? (
     <>
-      <DivBgColor bgColor="bg-cyan-100" />
       {isMobile ? (
-        <LoginMobile
+        <AuthMobileDetective
           role={role}
           setRole={setRole}
           isPasswordVisible={isPasswordVisible}
@@ -43,7 +45,7 @@ export default function Login() {
           setPassword={setPassword}
         />
       ) : isTablet ? (
-        <LoginTablet
+        <AuthTabletDetective
           role={role}
           setRole={setRole}
           isPasswordVisible={isPasswordVisible}
@@ -54,7 +56,7 @@ export default function Login() {
           setPassword={setPassword}
         />
       ) : (
-        <LoginDekstop
+        <AuthDekstopDetective
           role={role}
           setRole={setRole}
           isPasswordVisible={isPasswordVisible}
@@ -66,5 +68,9 @@ export default function Login() {
         />
       )}
     </>
+  ) : detectiveOrGuilty === "guilty" ? (
+    ""
+  ) : (
+    <Navigate to="/404" replace />
   );
 }

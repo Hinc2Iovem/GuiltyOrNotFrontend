@@ -1,4 +1,4 @@
-import { LoginTypes } from "./Login";
+import { AuthTypes } from "../Auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { ROLES } from "../../../consts/Roles";
@@ -6,7 +6,7 @@ import detectiveBg from "../../../assets/authDetectiveTabletBg.jpg";
 import detective from "../../../assets/detective-black.svg";
 import guilty from "../../../assets/mug-shot.svg";
 import { Link } from "react-router-dom";
-export default function LoginTablet({
+export default function AuthTabletDetective({
   isPasswordVisible,
   password,
   role,
@@ -15,7 +15,7 @@ export default function LoginTablet({
   setRole,
   setUsername,
   username,
-}: LoginTypes) {
+}: AuthTypes) {
   return (
     <section className="flex h-screen flex-col justify-between">
       <div className="h-full w-full self-end relative">

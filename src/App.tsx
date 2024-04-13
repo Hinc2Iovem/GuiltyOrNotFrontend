@@ -1,17 +1,18 @@
 import { Route, Routes } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout";
-import Login from "./features/Auth/Login/Login";
-import Registration from "./features/Auth/Registration/Registration";
+import Auth from "./features/Auth/Auth";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
     <>
       <Routes>
         <Route element={<DefaultLayout />}>
-          <Route path="auth">
-            <Route index element={<Login />} />
-            <Route path="registration" element={<Registration />} />
+          <Route path="auth/:role">
+            <Route index element={<Auth />} />
           </Route>
+
+          <Route path="404" element={<NotFound />} />
         </Route>
       </Routes>
     </>
