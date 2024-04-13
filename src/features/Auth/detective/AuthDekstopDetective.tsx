@@ -16,6 +16,11 @@ export default function AuthDekstopDetective({
   setRole,
   setUsername,
   username,
+  type,
+  confirmPassword,
+  isConfirmPasswordVisible,
+  setConfirmPassword,
+  setIsConfirmPasswordVisible,
 }: AuthTypes) {
   return (
     <section className="flex w-screen h-screen">
@@ -71,6 +76,42 @@ export default function AuthDekstopDetective({
                 <FontAwesomeIcon icon={faEye} />
               </button>
             </div>
+
+            <div
+              className={`${
+                type === "registration" ? "flex" : "hidden"
+              }  items-center gap-[.3rem] relative`}
+            >
+              <input
+                className={`py-[.5rem] bg-transparent shadow-inner shadow-black text-[3rem] text-black font-medium w-full px-[1rem] outline-none border-[3px] border-double border-gray-400 focus:border-[4px] placeholder:text-black`}
+                type={isConfirmPasswordVisible ? "text" : "password"}
+                name="ConfirmPassword"
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm Password"
+              />
+
+              <button
+                className={`${
+                  isConfirmPasswordVisible ? "hidden" : "visible"
+                } transition-colors absolute right-[1rem] hover:scale-[1.1] text-[3rem] text-black outline-none`}
+                type="button"
+                onClick={() => setIsConfirmPasswordVisible(true)}
+              >
+                <FontAwesomeIcon icon={faEyeSlash} />
+              </button>
+
+              <button
+                className={`${
+                  isConfirmPasswordVisible ? "visible" : "hidden"
+                } transition-colors absolute right-[1rem] hover:scale-[1.1] text-[3rem] text-white  outline-none`}
+                type="button"
+                onClick={() => setIsConfirmPasswordVisible(false)}
+              >
+                <FontAwesomeIcon icon={faEye} />
+              </button>
+            </div>
           </div>
 
           <div className="p-[1rem] ">
@@ -102,17 +143,23 @@ export default function AuthDekstopDetective({
           </div>
 
           <button className="w-fit mb-[2rem] text-gray-400 hover:text-black border-[1px] border-gray-400 rounded-md self-end text-[2rem] py-[1rem] px-[3rem] font-medium hover:shadow-sm hover:shadow-black hover:border-none hover:scale-[1.02] hover:rounded-md transition-all active:scale-[0.97] mr-[1rem]">
-            Sign In
+            {type === "registration" ? "Sign Up" : "Sign In"}
           </button>
           <div className=" self-end p-[1rem] text-center w-fit text-[1.8rem] flex flex-col">
             <p className="self-start text-white opacity-90 font-medium">
-              Do not have an accout?
+              {type === "registration"
+                ? "Already have an accout?"
+                : "Do not have an accout?"}{" "}
             </p>
             <Link
               className="text-white opacity-90 hover:text-black transition-colors self-end text-[2rem]"
-              to="/auth/registration"
+              to={
+                type === "registration"
+                  ? "/auth/login/detective"
+                  : "/auth/registration/detective"
+              }
             >
-              Sign Up
+              {type === "registration" ? "Sign In" : "Sign Up"}
             </Link>
           </div>
         </form>

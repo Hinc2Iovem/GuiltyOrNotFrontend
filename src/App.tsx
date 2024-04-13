@@ -8,7 +8,7 @@ export default function App() {
     <>
       <Routes>
         <Route element={<DefaultLayout />}>
-          <Route path="auth/:role">
+          <Route path="auth/:type">
             <Route index element={<Auth />} />
           </Route>
 
