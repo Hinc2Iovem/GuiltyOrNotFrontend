@@ -2,9 +2,9 @@ import { AuthTypes } from "../Auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { ROLES } from "../../../consts/Roles";
-import detectiveBg from "../../../assets/authDetectiveTabletBg.jpg";
-import detective from "../../../assets/detective-black.svg";
-import guilty from "../../../assets/mug-shot.svg";
+import detectiveBg from "../../../assets/detective/authDetectiveTabletBg.jpg";
+import detective from "../../../assets/shared/detective-black.svg";
+import guilty from "../../../assets/shared/mug-shot.svg";
 import { Link } from "react-router-dom";
 
 export default function AuthTabletDetective({

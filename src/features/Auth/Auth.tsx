@@ -6,6 +6,7 @@ import AuthDekstopDetective from "./detective/AuthDekstopDetective";
 import AuthMobileDetective from "./detective/AuthMobileDetective";
 import AuthTabletDetective from "./detective/AuthTabletDetective";
 import { Navigate, useParams } from "react-router-dom";
+import DivBgColor from "../../components/DivBgColor";
 
 export type AuthTypes = {
   role: ROLES;
@@ -47,6 +48,7 @@ export default function Auth() {
 
   return role === "Detective" ? (
     <>
+      <DivBgColor bgColor="bg-cyan-100" />
       {isMobile ? (
         <AuthMobileDetective
           role={role}
@@ -98,7 +100,9 @@ export default function Auth() {
       )}
     </>
   ) : role === "Guilty" ? (
-    ""
+    <>
+      <DivBgColor bgColor="bg-cyan-100" />
+    </>
   ) : (
     <Navigate to="/404" replace />
   );

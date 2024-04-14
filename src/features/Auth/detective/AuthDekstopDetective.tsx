@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AuthTypes } from "../Auth";
-import detectiveBg from "../../../assets/detectiveBg2.jpg";
-import detective from "../../../assets/detective-black.svg";
-import guilty from "../../../assets/mug-shot.svg";
+import detectiveBg from "../../../assets/detective/detectiveBg2.jpg";
+import detective from "../../../assets//shared/detectiveImage.jpg";
+import guilty from "../../../assets/shared/GuiltyImage.jpg";
+import woodenSign from "../../../assets/detective/sign1.png";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { ROLES } from "../../../consts/Roles";
 import { Link } from "react-router-dom";
@@ -24,108 +25,116 @@ export default function AuthDekstopDetective({
 }: AuthTypes) {
   return (
     <section className="flex w-screen h-screen">
-      <div className="h-full w-full relative">
+      <div className="h-full w-full relative overflow-hidden">
         <img
           src={detectiveBg}
           alt="Detective"
-          className=" w-full object-cover fixed top-0 right-0 left-0 bottom-0 m-auto"
+          className="w-full object-cover fixed top-0 right-0 left-0 bottom-0 m-auto"
         />
-        <div className=" bg-white opacity-20 absolute max-w-[70rem] h-[50rem] justify-center top-[calc(50%-25rem)] left-[calc(50%-35rem)] shadow-sm shadow-white rounded-md w-full"></div>
-
-        <form className="font-medium absolute p-[1rem] rounded-md flex flex-col w-full max-w-[70rem] h-[50rem] justify-center top-[calc(50%-25rem)] left-[calc(50%-35rem)] shadow-sm shadow-black">
-          <div className="flex flex-col gap-[1.5rem] p-[1rem]">
-            <div className="flex items-center gap-[.3rem] relative">
-              <input
-                className="py-[.5rem] bg-transparent shadow-inner shadow-black text-[3rem] text-black font-medium w-full px-[1rem] outline-none border-[3px] border-double border-gray-400 focus:border-[4px] placeholder:text-black"
-                type="text"
-                name="Username"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
-              />
-            </div>
-            <div className="flex items-center gap-[.3rem] relative">
-              <input
-                className={`py-[.5rem] bg-transparent shadow-inner shadow-black text-[3rem] text-black font-medium w-full px-[1rem] outline-none border-[3px] border-double border-gray-400 focus:border-[4px] placeholder:text-black`}
-                type={isPasswordVisible ? "text" : "password"}
-                name="Password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-              />
-
-              <button
-                className={`${
-                  isPasswordVisible ? "hidden" : "visible"
-                } transition-colors absolute right-[1rem] hover:scale-[1.1] text-[3rem] text-black outline-none`}
-                type="button"
-                onClick={() => setIsPasswordVisible(true)}
-              >
-                <FontAwesomeIcon icon={faEyeSlash} />
-              </button>
-
-              <button
-                className={`${
-                  isPasswordVisible ? "visible" : "hidden"
-                } transition-colors absolute right-[1rem] hover:scale-[1.1] text-[3rem] text-white  outline-none`}
-                type="button"
-                onClick={() => setIsPasswordVisible(false)}
-              >
-                <FontAwesomeIcon icon={faEye} />
-              </button>
-            </div>
-
+        <div className="relative max-w-[100rem] h-[80rem] m-auto">
+          <img
+            src={woodenSign}
+            className="absolute h-full object-contain top-[-10%] w-full"
+          />
+          <form
+            className={`font-medium ${
+              type === "registration" ? "-translate-y-12" : "-translate-y-20"
+            }  translate-x-4 p-[1rem] rounded-md flex flex-col w-[52.3rem] h-full justify-center m-auto`}
+          >
             <div
               className={`${
-                type === "registration" ? "flex" : "hidden"
-              }  items-center gap-[.3rem] relative`}
+                type === "registration" ? "gap-[1rem] pb-0" : "gap-[2rem]"
+              } flex flex-col gap-[1rem] p-[1rem]`}
             >
-              <input
-                className={`py-[.5rem] bg-transparent shadow-inner shadow-black text-[3rem] text-black font-medium w-full px-[1rem] outline-none border-[3px] border-double border-gray-400 focus:border-[4px] placeholder:text-black`}
-                type={isConfirmPasswordVisible ? "text" : "password"}
-                name="ConfirmPassword"
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Confirm Password"
-              />
+              <div className="flex items-center relative gap-[1rem]">
+                <input
+                  className="py-[.5rem] bg-transparent  text-[3rem] text-black font-medium w-full px-[1rem] outline-none shadow-inner shadow-black rounded-sm placeholder:text-gray-700"
+                  type="text"
+                  name="Username"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Username"
+                />
+              </div>
+              <div className="flex items-center gap-[.3rem] relative">
+                <input
+                  className={`py-[.5rem] bg-transparent  text-[3rem] text-black font-medium w-full px-[1rem] outline-none shadow-inner shadow-black rounded-sm placeholder:text-gray-700`}
+                  type={isPasswordVisible ? "text" : "password"}
+                  name="Password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                />
 
-              <button
-                className={`${
-                  isConfirmPasswordVisible ? "hidden" : "visible"
-                } transition-colors absolute right-[1rem] hover:scale-[1.1] text-[3rem] text-black outline-none`}
-                type="button"
-                onClick={() => setIsConfirmPasswordVisible(true)}
-              >
-                <FontAwesomeIcon icon={faEyeSlash} />
-              </button>
+                <button
+                  className={`${
+                    isPasswordVisible ? "hidden" : "visible"
+                  } transition-colors absolute right-[1rem] hover:scale-[1.1] text-[3rem] text-gray-700 outline-none`}
+                  type="button"
+                  onClick={() => setIsPasswordVisible(true)}
+                >
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                </button>
 
-              <button
+                <button
+                  className={`${
+                    isPasswordVisible ? "visible" : "hidden"
+                  } transition-colors absolute right-[1rem] hover:scale-[1.1] text-[3rem] text-black  outline-none`}
+                  type="button"
+                  onClick={() => setIsPasswordVisible(false)}
+                >
+                  <FontAwesomeIcon icon={faEye} />
+                </button>
+              </div>
+
+              <div
                 className={`${
-                  isConfirmPasswordVisible ? "visible" : "hidden"
-                } transition-colors absolute right-[1rem] hover:scale-[1.1] text-[3rem] text-white  outline-none`}
-                type="button"
-                onClick={() => setIsConfirmPasswordVisible(false)}
+                  type === "registration" ? "flex" : "hidden"
+                }  items-center gap-[.3rem] relative`}
               >
-                <FontAwesomeIcon icon={faEye} />
-              </button>
+                <input
+                  className={`py-[.5rem] bg-transparent  text-[3rem] text-black font-medium w-full px-[1rem] outline-none shadow-inner shadow-black rounded-sm placeholder:text-gray-700`}
+                  type={isConfirmPasswordVisible ? "text" : "password"}
+                  name="ConfirmPassword"
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Confirm Password"
+                />
+
+                <button
+                  className={`${
+                    isConfirmPasswordVisible ? "hidden" : "visible"
+                  } transition-colors absolute right-[1rem] hover:scale-[1.1] text-[3rem] text-gray-700 outline-none`}
+                  type="button"
+                  onClick={() => setIsConfirmPasswordVisible(true)}
+                >
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                </button>
+
+                <button
+                  className={`${
+                    isConfirmPasswordVisible ? "visible" : "hidden"
+                  } transition-colors absolute right-[1rem] hover:scale-[1.1] text-[3rem] text-black  outline-none`}
+                  type="button"
+                  onClick={() => setIsConfirmPasswordVisible(false)}
+                >
+                  <FontAwesomeIcon icon={faEye} />
+                </button>
+              </div>
             </div>
-          </div>
-
-          <div className="p-[1rem] ">
-            <div className="flex items-center gap-[1.5rem] outline-none border-[2px] shadow-inner shadow-black border-gray-400 px-[1rem] py-[.5rem]">
-              <h3 className="text-[4rem] font-medium text-black">Roles:</h3>
-              <div className="flex items-center gap-[1.5rem]">
+            <div className="flex justify-between">
+              <div className="flex items-center gap-[1.5rem] px-[1rem] shrink-0 py-[.5rem] ml-[1rem]">
                 <button onClick={() => setRole(ROLES.Detective)} type="button">
                   <img
                     src={detective}
                     className={`${
                       role === "Detective"
-                        ? "shadow-md shadow-black scale-[1.05]"
+                        ? "shadow-md shadow-black scale-[1.05] hover:scale-[1.07]"
                         : ""
-                    } transition-all w-[5rem] object-fill h-[5rem] rounded-full hover:scale-[1.05]`}
+                    } transition-all w-[5.5rem] object-fill h-[5.5rem] rounded-full hover:scale-[1.05]`}
                   />
                 </button>
                 <button onClick={() => setRole(ROLES.Guilty)} type="button">
@@ -133,36 +142,37 @@ export default function AuthDekstopDetective({
                     src={guilty}
                     className={`${
                       role === "Guilty"
-                        ? "shadow-md shadow-black scale-[1.05]"
+                        ? "shadow-md shadow-black scale-[1.05] hover:scale-[1.07]"
                         : ""
-                    } transition-all w-[5rem] object-fill h-[5rem] rounded-full hover:scale-[1.05]`}
+                    } transition-all w-[5.5rem] object-fill h-[5.5rem] rounded-full hover:scale-[1.05]`}
                   />
                 </button>
               </div>
+              <button className="w-fit text-black rounded-md self-end text-[2.2rem] py-[1.3rem] px-[3rem] font-medium shadow-sm shadow-black hover:scale-[1.02] transition-all active:scale-[0.97] mr-[1rem] ">
+                {type === "registration" ? "Sign Up" : "Sign In"}
+              </button>
             </div>
-          </div>
-
-          <button className="w-fit mb-[2rem] text-gray-400 hover:text-black border-[1px] border-gray-400 rounded-md self-end text-[2rem] py-[1rem] px-[3rem] font-medium hover:shadow-sm hover:shadow-black hover:border-none hover:scale-[1.02] hover:rounded-md transition-all active:scale-[0.97] mr-[1rem]">
-            {type === "registration" ? "Sign Up" : "Sign In"}
-          </button>
-          <div className=" self-end p-[1rem] text-center w-fit text-[1.8rem] flex flex-col">
-            <p className="self-start text-white opacity-90 font-medium">
-              {type === "registration"
-                ? "Already have an accout?"
-                : "Do not have an accout?"}{" "}
-            </p>
-            <Link
-              className="text-white opacity-90 hover:text-black transition-colors self-end text-[2rem]"
-              to={
-                type === "registration"
-                  ? "/auth/login/detective"
-                  : "/auth/registration/detective"
-              }
+            <div
+              className={`${
+                type === "registration" ? "text-white" : "text-black"
+              } self-end p-[1rem] text-center w-fit text-[1.8rem] flex flex-col`}
             >
-              {type === "registration" ? "Sign In" : "Sign Up"}
-            </Link>
-          </div>
-        </form>
+              <p className="self-start  opacity-90 font-medium">
+                {type === "registration"
+                  ? "Already have an accout?"
+                  : "Do not have an accout?"}{" "}
+              </p>
+              <Link
+                className=" hover:opacity-70 opacity-90 transition-colors self-end text-[2rem]"
+                to={
+                  type === "registration" ? "/auth/login" : "/auth/registration"
+                }
+              >
+                {type === "registration" ? "Sign In" : "Sign Up"}
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
   );
