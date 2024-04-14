@@ -6,6 +6,7 @@ import detectiveBg from "../../../assets/authDetectiveTabletBg.jpg";
 import detective from "../../../assets/detective-black.svg";
 import guilty from "../../../assets/mug-shot.svg";
 import { Link } from "react-router-dom";
+
 export default function AuthTabletDetective({
   isPasswordVisible,
   password,
