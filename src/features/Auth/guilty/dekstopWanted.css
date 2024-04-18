@@ -1,0 +1,80 @@
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes oldPaperOutAndBack {
+  0% {
+    left: 65rem;
+    transform: translateY(0rem);
+  }
+  5% {
+    left: 80rem;
+    transform: translateY(-1rem);
+  }
+  10% {
+    left: 85rem;
+    transform: translateY(-2rem);
+  }
+  20% {
+    left: 90rem;
+    transform: translateY(-3rem);
+  }
+  30% {
+    left: 87.5rem;
+    transform: translateY(-2.5rem);
+  }
+  40% {
+    left: 85rem;
+    transform: translateY(-2rem);
+  }
+  50% {
+    left: 82.5rem;
+    transform: translateY(-1.5rem);
+  }
+  60% {
+    left: 80rem;
+    transform: translateY(-1rem);
+  }
+  70% {
+    left: 79rem;
+    transform: translateY(-0.5rem);
+  }
+  80% {
+    left: 78rem;
+    transform: translateY(0rem);
+  }
+  90% {
+    left: 78.5rem;
+    transform: translateY(-0.25rem);
+  }
+  100% {
+    left: 78rem;
+    transform: translateY(0rem);
+  }
+}
+
+.shake {
+  animation: shake 0.3s ease-in-out infinite;
+}
+
+.shakeGlass {
+  animation: shake 0.3s ease-in-out infinite;
+}
+
+.oldPaperOutAndBack {
+  animation: oldPaperOutAndBack 1s ease-in-out forwards;
+}

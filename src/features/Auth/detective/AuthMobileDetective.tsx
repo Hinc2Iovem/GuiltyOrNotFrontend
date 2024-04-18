@@ -1,20 +1,15 @@
-import { AuthTypes } from "../Auth";
-import detectiveBg from "../../../assets/detective/detectiveBg1.jpg";
-import detective from "../../../assets/shared/detectiveImage.jpg";
-import guilty from "../../../assets/shared/GuiltyImage.jpg";
-import woodenSign from "../../../assets/detective/sign2.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
-import { ROLES } from "../../../consts/Roles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import detectiveBg from "../../../assets/detective/detectiveBg1.jpg";
+import woodenSign from "../../../assets/detective/sign2.png";
+import { AuthTypes } from "../Auth";
 
 export default function AuthMobileDetective({
   isPasswordVisible,
   password,
-  role,
   setIsPasswordVisible,
   setPassword,
-  setRole,
   setUsername,
   username,
   type,
@@ -115,35 +110,11 @@ export default function AuthMobileDetective({
               </button>
             </div>
 
-            <div className="flex items-baseline justify-between gap-[.4rem]">
-              <div className="flex items-center gap-[.5rem]">
-                <button onClick={() => setRole(ROLES.Detective)} type="button">
-                  <img
-                    src={detective}
-                    className={`${
-                      role === "Detective"
-                        ? "shadow-md shadow-black scale-[1.05]"
-                        : ""
-                    } transition-all max-w-[3rem] w-full max-h-[3rem] h-full rounded-full hover:scale-[1.05]`}
-                  />
-                </button>
-                <button onClick={() => setRole(ROLES.Guilty)} type="button">
-                  <img
-                    src={guilty}
-                    className={`${
-                      role === "Guilty"
-                        ? "shadow-md shadow-black scale-[1.05]"
-                        : ""
-                    } transition-all max-w-[3rem] w-full max-h-[3rem] h-full rounded-full hover:scale-[1.05]`}
-                  />
-                </button>
-              </div>
-              <button
-                className={`w-fit hover:scale-[1.03] whitespace-nowrap mb-[2rem] text-black self-end text-[1.5rem] py-[.5rem] px-[2rem] font-medium shadow-sm shadow-black border-none rounded-md transition-all active:scale-[0.97]`}
-              >
-                {type === "registration" ? "Sign Up" : "Sign In"}
-              </button>
-            </div>
+            <button
+              className={`w-fit hover:scale-[1.03] whitespace-nowrap mb-[2rem] text-black self-end text-[1.5rem] py-[.5rem] px-[2rem] font-medium shadow-sm shadow-black border-none rounded-md transition-all active:scale-[0.97]`}
+            >
+              {type === "registration" ? "Sign Up" : "Sign In"}
+            </button>
 
             <div className="text-black whitespace-nowrap self-end px-[1rem] py-[.5rem] rounded-md text-center w-fit text-[1.5rem] flex flex-col shadow-white shadow-sm relative">
               <div className="absolute bg-white opacity-30 top-0 bottom-0 left-0 right-0"></div>

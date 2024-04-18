@@ -44,13 +44,14 @@ export default function AuthTabletDetective({
               Username
             </label>
             <input
-              className="py-[.5rem] bg-transparent text-[1.5rem] font-medium w-full px-[1rem] outline-none border-[3px] border-double border-gray-400 focus:border-[4px]"
+              className="py-[.5rem] text-white bg-transparent text-[1.5rem] font-medium w-full px-[1rem] outline-none border-[3px] border-double border-gray-400 focus:border-[4px]"
               type="text"
               name="Username"
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Username"
+              autoComplete="off"
             />
           </div>
           <div className="flex items-center gap-[.3rem] relative">
@@ -135,7 +136,7 @@ export default function AuthTabletDetective({
                 isConfirmPasswordVisible ? "visible" : "hidden"
               } transition-colors absolute right-[1rem] hover:scale-[1.1] text-[1.5rem] text-white  outline-none`}
               type="button"
-              onClick={() => setIsPasswordVisible(false)}
+              onClick={() => setIsConfirmPasswordVisible(false)}
             >
               <FontAwesomeIcon icon={faEye} />
             </button>
@@ -144,7 +145,12 @@ export default function AuthTabletDetective({
           <div className="flex items-center gap-[1.5rem] outline-none border-[4px] border-dotted border-gray-400 px-[1rem] py-[.5rem] bg-white rounded-md">
             <h3 className="text-[2rem] font-medium text-black">Roles</h3>
             <div className="flex items-center gap-[1.5rem]">
-              <button onClick={() => setRole(ROLES.Detective)} type="button">
+              <button
+                onClick={() => {
+                  setRole ? setRole(ROLES.Detective) : () => {};
+                }}
+                type="button"
+              >
                 <img
                   src={detective}
                   className={`${
@@ -152,7 +158,12 @@ export default function AuthTabletDetective({
                   } transition-all w-[3rem] object-fill h-[3rem] rounded-full hover:scale-[1.05]`}
                 />
               </button>
-              <button onClick={() => setRole(ROLES.Guilty)} type="button">
+              <button
+                onClick={() => {
+                  setRole ? setRole(ROLES.Guilty) : () => {};
+                }}
+                type="button"
+              >
                 <img
                   src={guilty}
                   className={`${
@@ -176,9 +187,7 @@ export default function AuthTabletDetective({
             <Link
               className="z-[1] hover:text-gray-700 self-end"
               to={
-                type === "registration"
-                  ? "/auth/login/detective"
-                  : "/auth/registration/detective"
+                type === "registration" ? "/auth/login" : "/auth/registration"
               }
             >
               {type === "registration" ? "Sign In" : "Sign Up"}

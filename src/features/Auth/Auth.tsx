@@ -7,10 +7,14 @@ import AuthMobileDetective from "./detective/AuthMobileDetective";
 import AuthTabletDetective from "./detective/AuthTabletDetective";
 import { Navigate, useParams } from "react-router-dom";
 import DivBgColor from "../../components/DivBgColor";
+import AuthDekstopGuilty from "./guilty/AuthDekstopGuilty";
+import AuthTabletGuilty from "./guilty/AuthTabletGuilty";
+import AuthMobileGuilty from "./guilty/AuthMobileGuilty";
+import RolesFooter from "./RolesFooter";
 
 export type AuthTypes = {
-  role: ROLES;
-  setRole: React.Dispatch<React.SetStateAction<ROLES>>;
+  role?: ROLES;
+  setRole?: React.Dispatch<React.SetStateAction<ROLES>>;
   username: string;
   setUsername: React.Dispatch<React.SetStateAction<string>>;
   isPasswordVisible: boolean;
@@ -50,21 +54,24 @@ export default function Auth() {
     <>
       <DivBgColor bgColor="bg-cyan-100" />
       {isMobile ? (
-        <AuthMobileDetective
-          role={role}
-          setRole={setRole}
-          username={username}
-          setUsername={setUsername}
-          isPasswordVisible={isPasswordVisible}
-          setIsPasswordVisible={setIsPasswordVisible}
-          password={password}
-          setPassword={setPassword}
-          isConfirmPasswordVisible={isConfirmPasswordVisible}
-          setIsConfirmPasswordVisible={setIsConfirmPasswordVisible}
-          confirmPassword={confirmPassword}
-          setConfirmPassword={setConfirmPassword}
-          type={type}
-        />
+        <>
+          <AuthMobileDetective
+            role={role}
+            setRole={setRole}
+            username={username}
+            setUsername={setUsername}
+            isPasswordVisible={isPasswordVisible}
+            setIsPasswordVisible={setIsPasswordVisible}
+            password={password}
+            setPassword={setPassword}
+            isConfirmPasswordVisible={isConfirmPasswordVisible}
+            setIsConfirmPasswordVisible={setIsConfirmPasswordVisible}
+            confirmPassword={confirmPassword}
+            setConfirmPassword={setConfirmPassword}
+            type={type}
+          />
+          <RolesFooter role={role} setRole={setRole} visible isMobile />
+        </>
       ) : isTablet ? (
         <AuthTabletDetective
           role={role}
@@ -82,7 +89,50 @@ export default function Auth() {
           type={type}
         />
       ) : (
-        <AuthDekstopDetective
+        <>
+          <AuthDekstopDetective
+            role={role}
+            setRole={setRole}
+            isPasswordVisible={isPasswordVisible}
+            setIsPasswordVisible={setIsPasswordVisible}
+            username={username}
+            setUsername={setUsername}
+            password={password}
+            setPassword={setPassword}
+            isConfirmPasswordVisible={isConfirmPasswordVisible}
+            setIsConfirmPasswordVisible={setIsConfirmPasswordVisible}
+            confirmPassword={confirmPassword}
+            setConfirmPassword={setConfirmPassword}
+            type={type}
+          />
+          <RolesFooter role={role} setRole={setRole} visible />
+        </>
+      )}
+    </>
+  ) : role === "Guilty" ? (
+    <>
+      <DivBgColor bgColor="bg-cyan-100" />
+      {isMobile ? (
+        <>
+          <AuthMobileGuilty
+            role={role}
+            setRole={setRole}
+            username={username}
+            setUsername={setUsername}
+            isPasswordVisible={isPasswordVisible}
+            setIsPasswordVisible={setIsPasswordVisible}
+            password={password}
+            setPassword={setPassword}
+            isConfirmPasswordVisible={isConfirmPasswordVisible}
+            setIsConfirmPasswordVisible={setIsConfirmPasswordVisible}
+            confirmPassword={confirmPassword}
+            setConfirmPassword={setConfirmPassword}
+            type={type}
+          />
+          <RolesFooter role={role} setRole={setRole} visible isMobile />
+        </>
+      ) : isTablet ? (
+        <AuthTabletGuilty
           role={role}
           setRole={setRole}
           isPasswordVisible={isPasswordVisible}
@@ -97,11 +147,26 @@ export default function Auth() {
           setConfirmPassword={setConfirmPassword}
           type={type}
         />
+      ) : (
+        <>
+          <AuthDekstopGuilty
+            role={role}
+            setRole={setRole}
+            isPasswordVisible={isPasswordVisible}
+            setIsPasswordVisible={setIsPasswordVisible}
+            username={username}
+            setUsername={setUsername}
+            password={password}
+            setPassword={setPassword}
+            isConfirmPasswordVisible={isConfirmPasswordVisible}
+            setIsConfirmPasswordVisible={setIsConfirmPasswordVisible}
+            confirmPassword={confirmPassword}
+            setConfirmPassword={setConfirmPassword}
+            type={type}
+          />
+          <RolesFooter role={role} setRole={setRole} visible />
+        </>
       )}
-    </>
-  ) : role === "Guilty" ? (
-    <>
-      <DivBgColor bgColor="bg-cyan-100" />
     </>
   ) : (
     <Navigate to="/404" replace />
