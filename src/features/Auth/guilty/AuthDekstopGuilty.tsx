@@ -25,6 +25,7 @@ export default function AuthDekstopGuilty({
   setUsername,
   type,
   username,
+  handleSubmit,
 }: AuthTypes) {
   const [isFillingStarted, setIsFillingStarted] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
@@ -90,6 +91,7 @@ export default function AuthDekstopGuilty({
             } absolute w-full h-full max-w-[38.7rem] z-[-1] max-h-[80.3rem] top-0 left-[65rem] `}
           >
             <form
+              onSubmit={handleSubmit}
               className={`${
                 oldPaperOutAndBack && isShaking === false ? "visible" : "hidden"
               } gap-[1.5rem]  translate-x-[.1rem] m-auto w-full h-full translate-y-[6.5rem] p-[1rem] rounded-lg relative`}
@@ -195,6 +197,7 @@ function FirstListOfOldPaper({
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Username"
+          autoComplete="off"
         />
         <button
           onClick={() => setCurrentOldPage("password")}

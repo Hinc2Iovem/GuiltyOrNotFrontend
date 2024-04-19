@@ -17,6 +17,7 @@ export default function AuthMobileDetective({
   isConfirmPasswordVisible,
   setConfirmPassword,
   setIsConfirmPasswordVisible,
+  handleSubmit,
 }: AuthTypes) {
   return (
     <section className="h-screen relative w-full">
@@ -32,7 +33,10 @@ export default function AuthMobileDetective({
             alt="woodenSign"
             className="absolute object-contain w-full h-full min-h-[40rem]"
           />
-          <form className="absolute max-w-[43rem] max-h-[55rem] flex flex-col gap-[1rem] translate-y-5 top-[37%] left-[25.5%] w-[53%] p-[1.2rem] h-full text-white">
+          <form
+            onSubmit={handleSubmit}
+            className="absolute max-w-[43rem] max-h-[55rem] flex flex-col gap-[1rem] translate-y-5 top-[37%] left-[25.5%] w-[53%] p-[1.2rem] h-full text-white"
+          >
             <input
               className="py-[.5rem] placeholder:text-black placeholder:opacity-70 bg-transparent text-[1.5rem] font-medium w-full px-[1rem] outline-none rounded-md shadow-inner shadow-black"
               type="text"
@@ -41,6 +45,7 @@ export default function AuthMobileDetective({
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Username"
+              autoComplete="off"
             />
             <div className="flex items-center gap-[.3rem] relative">
               <input

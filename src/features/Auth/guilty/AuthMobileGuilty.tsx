@@ -1,11 +1,10 @@
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import guiltyBg from "../../../assets/guilty/guiltyBg6.jpg";
-import woodenDoor from "../../../assets/guilty/woodenDoor.png";
-import mobileBg from "../../../assets/guilty/mobileBg.png";
-import buttonBg from "../../../assets/guilty/buttonBg.png";
-import { AuthTypes } from "../Auth";
 import { Link } from "react-router-dom";
+import buttonBg from "../../../assets/guilty/buttonBg.png";
+import guiltyBg from "../../../assets/guilty/guiltyBg6.jpg";
+import mobileBg from "../../../assets/guilty/mobileBg.png";
+import { AuthTypes } from "../Auth";
 
 export default function AuthMobileGuilty({
   confirmPassword,
@@ -19,6 +18,7 @@ export default function AuthMobileGuilty({
   setUsername,
   type,
   username,
+  handleSubmit,
 }: AuthTypes) {
   return (
     <section className="flex w-full h-screen">
@@ -31,6 +31,8 @@ export default function AuthMobileGuilty({
         <div className="fixed top-0 bottom-0 right-0 left-0 bg-black md:opacity-0 w-full opacity-40"></div>
 
         <form
+          onSubmit={handleSubmit}
+          action="/submit"
           id="mobileGuilty"
           className="relative font-medium w-fit h-fit flex flex-col items-center mx-auto justify-center gap-[1rem]"
         >
@@ -121,7 +123,11 @@ export default function AuthMobileGuilty({
           </div>
         </form>
 
-        <button className="relative outline-none left-1/2 w-[14rem] h-[4.5rem] rounded-md hover:scale-[1.02]">
+        <button
+          form="mobileGuilty"
+          type="submit"
+          className="relative outline-none left-1/2 w-[14rem] h-[4.5rem] rounded-md hover:scale-[1.02]"
+        >
           <img
             src={buttonBg}
             alt="Submit"

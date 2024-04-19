@@ -17,6 +17,7 @@ export default function AuthDekstopDetective({
   isConfirmPasswordVisible,
   setConfirmPassword,
   setIsConfirmPasswordVisible,
+  handleSubmit,
 }: AuthTypes) {
   return (
     <section className="flex w-screen h-screen">
@@ -32,6 +33,7 @@ export default function AuthDekstopDetective({
             className="absolute h-full object-contain top-[-10%] w-full"
           />
           <form
+            onSubmit={handleSubmit}
             className={`font-medium ${
               type === "registration" ? "-translate-y-12" : "-translate-y-20"
             }  translate-x-4 p-[1rem] rounded-md flex flex-col w-[52.3rem] h-full justify-center m-auto`}
@@ -50,6 +52,7 @@ export default function AuthDekstopDetective({
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Username"
+                  autoComplete="off"
                 />
               </div>
               <div className="flex items-center gap-[.3rem] relative">

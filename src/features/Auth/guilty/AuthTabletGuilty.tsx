@@ -21,6 +21,7 @@ export default function AuthTabletGuilty({
   setUsername,
   type,
   username,
+  handleSubmit,
 }: AuthTypes) {
   return (
     <section className="flex w-full h-screen">
@@ -31,7 +32,10 @@ export default function AuthTabletGuilty({
           className="absolute object-cover w-full h-full"
         />
         <div className="absolute right-1/5 top-[17%] bg-black md:opacity-0 w-full h-[50rem] opacity-20"></div>
-        <form className="absolute md:right-[1rem] right-[calc(33.3%-3rem)] top-[calc(33.3%-3rem)] transition-all text-white font-medium text-[1.5rem] flex flex-col gap-[1.5rem] p-[2rem]">
+        <form
+          onSubmit={handleSubmit}
+          className="absolute md:right-[1rem] right-[calc(33.3%-3rem)] top-[calc(33.3%-3rem)] transition-all text-white font-medium text-[1.5rem] flex flex-col gap-[1.5rem] p-[2rem]"
+        >
           <div className="flex items-center gap-[.3rem] relative md:w-full">
             <label
               className={`absolute ${

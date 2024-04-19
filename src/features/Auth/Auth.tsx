@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { ROLES } from "../../consts/Roles";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import DivBgColor from "../../components/DivBgColor";
 import { MATCHMEDIA } from "../../consts/MatchMedia";
+import { ROLES } from "../../consts/Roles";
 import useMatchMedia from "../../hooks/useMatchMedia";
+import RolesFooter from "./RolesFooter";
 import AuthDekstopDetective from "./detective/AuthDekstopDetective";
 import AuthMobileDetective from "./detective/AuthMobileDetective";
 import AuthTabletDetective from "./detective/AuthTabletDetective";
-import { Navigate, useParams } from "react-router-dom";
-import DivBgColor from "../../components/DivBgColor";
 import AuthDekstopGuilty from "./guilty/AuthDekstopGuilty";
-import AuthTabletGuilty from "./guilty/AuthTabletGuilty";
 import AuthMobileGuilty from "./guilty/AuthMobileGuilty";
-import RolesFooter from "./RolesFooter";
+import AuthTabletGuilty from "./guilty/AuthTabletGuilty";
+import axios from "axios";
 
 export type AuthTypes = {
   role?: ROLES;
@@ -26,6 +27,7 @@ export type AuthTypes = {
   confirmPassword: string;
   setConfirmPassword: React.Dispatch<React.SetStateAction<string>>;
   type: string;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
 };
 
 export default function Auth() {
@@ -40,11 +42,44 @@ export default function Auth() {
 
   const [role, setRole] = useState<ROLES>(ROLES.Detective);
   const isMobile = useMatchMedia(MATCHMEDIA.Mobile);
-  console.log("mobile: ", isMobile);
   const isTablet = useMatchMedia(MATCHMEDIA.Tablet);
-  console.log("table: ", isTablet);
 
+  const navigate = useNavigate();
   const { type } = useParams();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("What's happening");
+    try {
+      if (!username || !password) {
+        console.log("Username and password are required");
+        return;
+      }
+      if (type === "registration") {
+        const data = await axios
+          .post("http://localhost:8080/api/v1/auth/registration", {
+            username,
+            password,
+            role,
+          })
+          .then((res) => res);
+        console.log(data.data);
+      } else if (type === "login") {
+        const data = await axios
+          .post("http://localhost:8080/api/v1/auth", {
+            username,
+            password,
+          })
+          .then((res) => res);
+        console.log(data);
+      }
+      localStorage.setItem("username", JSON.stringify(username));
+      localStorage.setItem("role", JSON.stringify(role));
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   if (!type?.trim()) {
     return <h2>Something went wrong</h2>;
@@ -69,6 +104,7 @@ export default function Auth() {
             confirmPassword={confirmPassword}
             setConfirmPassword={setConfirmPassword}
             type={type}
+            handleSubmit={handleSubmit}
           />
           <RolesFooter role={role} setRole={setRole} visible isMobile />
         </>
@@ -87,6 +123,7 @@ export default function Auth() {
           confirmPassword={confirmPassword}
           setConfirmPassword={setConfirmPassword}
           type={type}
+          handleSubmit={handleSubmit}
         />
       ) : (
         <>
@@ -104,6 +141,7 @@ export default function Auth() {
             confirmPassword={confirmPassword}
             setConfirmPassword={setConfirmPassword}
             type={type}
+            handleSubmit={handleSubmit}
           />
           <RolesFooter role={role} setRole={setRole} visible />
         </>
@@ -128,6 +166,7 @@ export default function Auth() {
             confirmPassword={confirmPassword}
             setConfirmPassword={setConfirmPassword}
             type={type}
+            handleSubmit={handleSubmit}
           />
           <RolesFooter role={role} setRole={setRole} visible isMobile />
         </>
@@ -146,6 +185,7 @@ export default function Auth() {
           confirmPassword={confirmPassword}
           setConfirmPassword={setConfirmPassword}
           type={type}
+          handleSubmit={handleSubmit}
         />
       ) : (
         <>
@@ -163,6 +203,7 @@ export default function Auth() {
             confirmPassword={confirmPassword}
             setConfirmPassword={setConfirmPassword}
             type={type}
+            handleSubmit={handleSubmit}
           />
           <RolesFooter role={role} setRole={setRole} visible />
         </>
