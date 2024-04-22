@@ -7,8 +7,6 @@ import Guilty from "./features/Guilty/Guilty";
 import ProtectedRoutes from "./features/Auth/Protected/ProtectedRoutes";
 
 export default function App() {
-  console.log("Main Page");
-
   return (
     <>
       <Routes>
