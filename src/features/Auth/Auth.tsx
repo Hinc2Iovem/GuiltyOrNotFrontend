@@ -56,16 +56,23 @@ export default function Auth() {
         return;
       }
       if (type === "registration") {
-        await axios.post("http://localhost:8080/api/v1/auth/registration", {
-          username,
-          password,
-          role,
-        });
+        const res = await axios
+          .post("http://localhost:8080/api/v1/auth/registration", {
+            username,
+            password,
+            role,
+          })
+          .then((r) => r.data);
+        localStorage.setItem("userId", res.id);
       } else if (type === "login") {
-        await axios.post("http://localhost:8080/api/v1/auth", {
-          username,
-          password,
-        });
+        const res = await axios
+          .post("http://localhost:8080/api/v1/auth", {
+            username,
+            password,
+          })
+          .then((r) => r.data);
+
+        localStorage.setItem("userId", res.id);
       }
       localStorage.setItem("username", username);
       localStorage.setItem("role", role);

@@ -5,7 +5,7 @@ import { hidePromptModal } from "./ButtonHoverPromptModal";
 
 const AsideHoverPromptModalStyles = cva(
   [
-    "z-[999] text-[1.5rem] transition-all w-fit absolute bottom-[-4.5rem] py-[.5rem] px-[1rem] whitespace-nowrap",
+    "z-[1000] text-[1.5rem] transition-all w-fit absolute bottom-[-3.5rem] py-[.5rem] px-[1rem] whitespace-nowrap",
   ],
   {
     variants: {
@@ -37,12 +37,13 @@ export default function AsideHoverPromptModal({
   hideModal,
   showAsidePrompt,
   positionByAbscissa,
+  asideClasses,
   ...props
 }: AsideHoverPromptModalProps) {
   const clickToOpenModal = hideModal ? "hidden" : "block";
   const hoverOnButtonToOpenAsideModal = showAsidePrompt ? "block" : "hidden";
-
-  const currentPosition = `${positionByAbscissa}-0`;
+  const asideClass = asideClasses;
+  const currentPositionX = `${positionByAbscissa}-0`;
 
   return (
     <aside
@@ -52,7 +53,8 @@ export default function AsideHoverPromptModal({
         className,
         clickToOpenModal,
         hoverOnButtonToOpenAsideModal,
-        currentPosition
+        currentPositionX,
+        asideClass
       )}
     >
       {contentName}

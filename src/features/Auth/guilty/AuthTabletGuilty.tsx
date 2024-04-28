@@ -158,7 +158,7 @@ export default function AuthTabletGuilty({
                 <img
                   src={detective}
                   className={`${
-                    role === "Detective" ? "shadow-md shadow-black" : ""
+                    role === "detective" ? "shadow-md shadow-black" : ""
                   } transition-all w-[3rem] object-fill h-[3rem] rounded-full hover:scale-[1.05]`}
                 />
               </button>
@@ -171,7 +171,7 @@ export default function AuthTabletGuilty({
                 <img
                   src={guilty}
                   className={`${
-                    role === "Guilty" ? "shadow-md shadow-black" : ""
+                    role === "guilty" ? "shadow-md shadow-black" : ""
                   } transition-all w-[3rem] object-fill h-[3rem] rounded-full hover:scale-[1.05]`}
                 />
               </button>

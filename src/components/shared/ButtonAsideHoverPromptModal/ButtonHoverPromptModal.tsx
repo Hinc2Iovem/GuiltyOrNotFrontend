@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import AsideHoverPromptModal from "./AsideHoverPromptModal";
 
 const ButtonHoverPromptModalStyles = cva(
-  ["z-[999] transition-all hover:translate-x-[5%] outline-none w-fit"],
+  ["z-[999] transition-all hover:scale-[1.03] outline-none w-fit"],
   {
     variants: {
       variant: {
@@ -26,6 +26,9 @@ export interface hidePromptModal {
   hideModal?: boolean;
   contentName: string;
   positionByAbscissa: "left" | "right";
+  asideClasses?: string;
+  classesOnUpperDiv?: string;
+  upperDivRelative?: boolean;
 }
 
 type ButtonHoverPromptModalProps = VariantProps<
@@ -38,14 +41,19 @@ export default function ButtonHoverPromptModal({
   variant,
   className,
   contentName,
-  hideModal,
+  hideModal = false,
   positionByAbscissa = "right",
+  asideClasses,
+  classesOnUpperDiv = "",
+  upperDivRelative = true,
   ...props
 }: ButtonHoverPromptModalProps) {
   const [showAsidePrompt, setShowAsidePrompt] = useState(false);
 
   return (
-    <div className="relative ">
+    <div
+      className={`${upperDivRelative ? "relative" : ""}  ${classesOnUpperDiv}`}
+    >
       <button
         {...props}
         className={twMerge(
@@ -55,12 +63,17 @@ export default function ButtonHoverPromptModal({
         onMouseOver={() => setShowAsidePrompt(true)}
         onMouseOut={() => setShowAsidePrompt(false)}
       ></button>
-      <AsideHoverPromptModal
-        contentName={contentName}
-        hideModal={hideModal}
-        showAsidePrompt={showAsidePrompt}
-        positionByAbscissa={positionByAbscissa}
-      />
+      {hideModal === false ? (
+        <AsideHoverPromptModal
+          contentName={contentName}
+          hideModal={hideModal}
+          showAsidePrompt={showAsidePrompt}
+          positionByAbscissa={positionByAbscissa}
+          asideClasses={asideClasses}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 }
