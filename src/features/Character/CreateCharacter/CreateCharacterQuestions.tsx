@@ -207,7 +207,10 @@ export default function CreateCharacterQuestions({
             </button>
           </div>
         </div>
-        <button className="relative w-[10rem] h-[3rem] rounded-md hover:scale-[1.03] mt-[-2rem] shrink-0">
+        <button
+          type="submit"
+          className="relative w-[10rem] h-[3rem] rounded-md hover:scale-[1.03] mt-[-2rem] shrink-0"
+        >
           <p className="text-white font-medium text-[1.5rem] absolute top-[2.7rem] left-[25%] z-[10] ">
             Submit
           </p>

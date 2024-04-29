@@ -12,10 +12,7 @@ export default function ProfileAvatar() {
     "imgOption",
     imgOptionOne
   );
-  const [userId, setUserId] = useLocalStorage(
-    "userId",
-    localStorage.getItem("userId")
-  );
+  const [userId] = useLocalStorage("userId", localStorage.getItem("userId"));
 
   const [showModal, setShowModal] = useState(false);
   const [imgUrl, setImgUrl] = useState("");
@@ -33,8 +30,6 @@ export default function ProfileAvatar() {
     setImgUrl,
     setShowModal,
   });
-
-  console.log("imgUrl: ", imgUrl);
 
   return (
     <>

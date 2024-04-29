@@ -1,8 +1,11 @@
 import { useState } from "react";
 import next from "../../../assets/detective/character/next.png";
+import useLocalStorage from "../../../hooks/useLocalStorage";
 import CreateCharacterLeft from "./CreateCharacterLeft";
-import CreateCharacterRight from "./CreateCharacterRight";
 import CreateCharacterQuestions from "./CreateCharacterQuestions";
+import CreateCharacterRight from "./CreateCharacterRight";
+import { CharaterBodyTypes } from "../CharacterTypes";
+import axios from "axios";
 
 export type CreateCharacterTypes = {
   characterShowPlus: boolean;
@@ -19,6 +22,12 @@ export type CreateCharacterTypes = {
   setCharacterFeature: React.Dispatch<React.SetStateAction<string>>;
   characterHairColor: string;
   setCharacterHairColor: React.Dispatch<React.SetStateAction<string>>;
+  setImgs: React.Dispatch<React.SetStateAction<ImgFileTypes>>;
+};
+
+type ImgFileTypes = {
+  firstImg: File | null;
+  secondImg: File | null;
 };
 
 export default function CreateCharacterMain() {
@@ -48,9 +57,66 @@ export default function CreateCharacterMain() {
   const [guiltyQuestion, setGuiltyQuestion] = useState("");
   const [guiltyAnswer, setGuiltyAnswer] = useState("");
 
+  const [imgs, setImgs] = useState<ImgFileTypes>({
+    firstImg: null,
+    secondImg: null,
+  });
+
+  const [userId] = useLocalStorage("userId", localStorage.getItem("userId"));
+
+  const [imgUrl, setImgUrl] = useState("");
+  const [imgUrlGuilty, setImgUrlGuilty] = useState("");
+
+  async function handleOnSubmitToCloud(e: React.SyntheticEvent) {
+    e.preventDefault();
+
+    if (!imgs.firstImg || !imgs.secondImg) return;
+
+    try {
+      const formData = new FormData();
+      formData.append("file", imgs.firstImg);
+      formData.append("upload_preset", "guiltyornot");
+      formData.append("api_key", import.meta.env.VITE_CLOUDINARY_API_KEY);
+
+      const results = await fetch(
+        "https://api.cloudinary.com/v1_1/dfj0kwoli/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((r) => r.json());
+      setImgUrl(results.secure_url);
+
+      const formDataGuilty = new FormData();
+      formDataGuilty.append("file", imgs.secondImg);
+      formDataGuilty.append("upload_preset", "guiltyornot");
+      formDataGuilty.append("api_key", import.meta.env.VITE_CLOUDINARY_API_KEY);
+
+      const resultsGuilty = await fetch(
+        "https://api.cloudinary.com/v1_1/dfj0kwoli/image/upload",
+        {
+          method: "POST",
+          body: formDataGuilty,
+        }
+      ).then((r) => r.json());
+      setImgUrlGuilty(resultsGuilty.secure_url);
+
+      const characterResult = await axios
+        .post<CharaterBodyTypes>(
+          `http://localhost:8080/api/v1/characters/detectives/${userId}`,
+          {
+            description,
+          }
+        )
+        .then((r) => r.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <main className="flex gap-[2rem] w-full">
-      <form className="w-full">
+      <form onSubmit={handleOnSubmitToCloud} className="w-full">
         <div
           className={`${
             currentPage === "characters" ? "" : "hidden"
@@ -73,6 +139,7 @@ export default function CreateCharacterMain() {
             setCharacterHairColor={setCharacterHairColor}
             setCharacterName={setCharacterName}
             setCharacterShowPlus={setCharacterShowPlus}
+            setImgs={setImgs}
           />
           <CreateCharacterRight
             characterAge={guiltyAge as number}
@@ -91,6 +158,7 @@ export default function CreateCharacterMain() {
             setCharacterHairColor={setGuiltyHairColor}
             setCharacterName={setGuiltyName}
             setCharacterShowPlus={setGuiltyShowPlus}
+            setImgs={setImgs}
           />
           <button
             type="button"

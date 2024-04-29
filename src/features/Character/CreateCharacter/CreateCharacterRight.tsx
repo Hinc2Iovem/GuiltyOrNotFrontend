@@ -1,6 +1,8 @@
+import { useDropzone } from "react-dropzone";
 import testGuilty from "../../../assets/detective/character/8D.png";
 import plus from "../../../assets/shared/profile/plus.png";
 import { CreateCharacterTypes } from "./CreateCharacterMain";
+import { useCallback, useState } from "react";
 
 export default function CreateCharacterRight({
   characterAge,
@@ -17,7 +19,28 @@ export default function CreateCharacterRight({
   setCharacterHairColor,
   setCharacterName,
   setCharacterShowPlus,
+  setImgs,
 }: CreateCharacterTypes) {
+  const [imgOption, setImgOption] = useState("");
+  const onDrop = useCallback(
+    (acceptedFiles: Array<File>) => {
+      const file = new FileReader();
+      file.onload = function () {
+        setImgOption(file.result as string);
+      };
+      file.readAsDataURL(acceptedFiles[0]);
+      setImgs((prev) => ({
+        ...prev,
+        secondImg: acceptedFiles[0],
+      }));
+    },
+    [setImgs]
+  );
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+  });
+
   return (
     <div className="bg-white h-full w-full rounded-md flex flex-col gap-[1.5rem] p-[1rem] relative shadow-black shadow-sm">
       <h3 className="absolute top-[-2rem] left-[1rem] text-[1.3rem] text-gray font-medium">
@@ -29,7 +52,7 @@ export default function CreateCharacterRight({
         className="relative max-w-[30rem] min-w-[20rem] m-auto"
       >
         <img
-          src={testGuilty}
+          src={imgOption ? imgOption : testGuilty}
           alt="Guilty"
           className="w-full h-full object-cover"
         />
@@ -37,10 +60,20 @@ export default function CreateCharacterRight({
           className={`${
             characterShowPlus ? "lg:block" : ""
           } hidden absolute left-[calc(50%-4rem)] w-[8rem] top-[calc(50%-6rem)] cursor-pointer hover:scale-[1.03]`}
+          {...getRootProps()}
         >
+          <input type="file" {...getInputProps()} />
           <img src={plus} alt="Plus" />
         </div>
-        <div className="lg:hidden absolute left-[calc(50%-4rem)] w-[8rem] top-[calc(50%-6rem)] cursor-pointer hover:scale-[1.03]">
+        <div
+          {...getRootProps()}
+          className="lg:hidden absolute left-[calc(50%-4rem)] w-[8rem] top-[calc(50%-6rem)] cursor-pointer hover:scale-[1.03]"
+        >
+          <input
+            type="file"
+            {...getInputProps()}
+            className="absolute top-0 bottom-0 left-0 right-0 bg-white h-full w-full"
+          />
           <img src={plus} alt="Plus" />
         </div>
       </div>
