@@ -1,11 +1,10 @@
+import axios from "axios";
 import { useState } from "react";
 import next from "../../../assets/detective/character/next.png";
 import useLocalStorage from "../../../hooks/useLocalStorage";
+import { CharaterBodyTypes } from "../CharacterTypes";
 import CreateCharacterLeft from "./CreateCharacterLeft";
 import CreateCharacterQuestions from "./CreateCharacterQuestions";
-import CreateCharacterRight from "./CreateCharacterRight";
-import { CharaterBodyTypes } from "../CharacterTypes";
-import axios from "axios";
 
 export type CreateCharacterTypes = {
   characterShowPlus: boolean;
@@ -27,15 +26,14 @@ export type CreateCharacterTypes = {
 
 type ImgFileTypes = {
   firstImg: File | null;
-  secondImg: File | null;
 };
 
 export default function CreateCharacterMain() {
   const [currentPage, setCurrentPage] = useState("characters");
+  const [characterShowPlus, setCharacterShowPlus] = useState(false);
 
   const [levelOfDifficulty, setLevelOfDifficulty] = useState<number>(1);
 
-  const [characterShowPlus, setCharacterShowPlus] = useState(false);
   const [characterName, setCharacterName] = useState("");
   const [characterAge, setCharacterAge] = useState<number>();
   const [characterGender, setCharacterGender] = useState("");
@@ -43,34 +41,36 @@ export default function CreateCharacterMain() {
   const [characterFeature, setCharacterFeature] = useState("");
   const [characterHairColor, setCharacterHairColor] = useState("");
 
-  const [guiltyShowPlus, setGuiltyShowPlus] = useState(false);
-  const [guiltyName, setGuiltyName] = useState("");
-  const [guiltyAge, setGuiltyAge] = useState<number>(0);
-  const [guiltyGender, setGuiltyGender] = useState("");
-  const [guiltyDescription, setGuiltyDescription] = useState("");
-  const [guiltyFeature, setGuiltyFeature] = useState("");
-  const [guiltyHairColor, setGuiltyHairColor] = useState("");
-
   const [characterQuestion, setCharacterQuestion] = useState("");
   const [characterAnswer, setCharacterAnswer] = useState("");
 
-  const [guiltyQuestion, setGuiltyQuestion] = useState("");
-  const [guiltyAnswer, setGuiltyAnswer] = useState("");
-
   const [imgs, setImgs] = useState<ImgFileTypes>({
     firstImg: null,
-    secondImg: null,
   });
 
   const [userId] = useLocalStorage("userId", localStorage.getItem("userId"));
 
   const [imgUrl, setImgUrl] = useState("");
-  const [imgUrlGuilty, setImgUrlGuilty] = useState("");
+
+  const canSave = [
+    characterAge,
+    characterName,
+    characterGender,
+    characterDescription,
+    characterFeature,
+    characterHairColor,
+    characterQuestion,
+    characterAge,
+  ].every(Boolean);
 
   async function handleOnSubmitToCloud(e: React.SyntheticEvent) {
     e.preventDefault();
 
-    if (!imgs.firstImg || !imgs.secondImg) return;
+    if (!canSave) {
+      console.log("Missing values");
+      return;
+    }
+    if (!imgs.firstImg) return;
 
     try {
       const formData = new FormData();
@@ -87,28 +87,23 @@ export default function CreateCharacterMain() {
       ).then((r) => r.json());
       setImgUrl(results.secure_url);
 
-      const formDataGuilty = new FormData();
-      formDataGuilty.append("file", imgs.secondImg);
-      formDataGuilty.append("upload_preset", "guiltyornot");
-      formDataGuilty.append("api_key", import.meta.env.VITE_CLOUDINARY_API_KEY);
-
-      const resultsGuilty = await fetch(
-        "https://api.cloudinary.com/v1_1/dfj0kwoli/image/upload",
-        {
-          method: "POST",
-          body: formDataGuilty,
-        }
-      ).then((r) => r.json());
-      setImgUrlGuilty(resultsGuilty.secure_url);
-
       const characterResult = await axios
         .post<CharaterBodyTypes>(
           `http://localhost:8080/api/v1/characters/detectives/${userId}`,
           {
-            description,
+            description: characterDescription,
+            name: characterName,
+            age: characterAge,
+            levelOfDifficulty,
+            characterImgUrl: imgUrl,
+            detectiveId: userId,
+            feature: characterFeature,
+            gender: characterGender,
+            hairColor: characterHairColor,
           }
         )
         .then((r) => r.data);
+      console.log(characterResult);
     } catch (error) {
       console.error(error);
     }
@@ -141,25 +136,7 @@ export default function CreateCharacterMain() {
             setCharacterShowPlus={setCharacterShowPlus}
             setImgs={setImgs}
           />
-          <CreateCharacterRight
-            characterAge={guiltyAge as number}
-            characterDescription={guiltyDescription}
-            characterFeature={guiltyFeature}
-            characterGender={guiltyGender}
-            characterHairColor={guiltyHairColor}
-            characterName={guiltyName}
-            characterShowPlus={guiltyShowPlus}
-            setCharacterAge={
-              setGuiltyAge as React.Dispatch<React.SetStateAction<number>>
-            }
-            setCharacterDescription={setGuiltyDescription}
-            setCharacterFeature={setGuiltyFeature}
-            setCharacterGender={setGuiltyGender}
-            setCharacterHairColor={setGuiltyHairColor}
-            setCharacterName={setGuiltyName}
-            setCharacterShowPlus={setGuiltyShowPlus}
-            setImgs={setImgs}
-          />
+
           <button
             type="button"
             onClick={() => {
@@ -175,13 +152,9 @@ export default function CreateCharacterMain() {
           characterAnswer={characterAnswer}
           characterQuestion={characterQuestion}
           currentPage={currentPage}
-          guiltyAnswer={guiltyAnswer}
-          guiltyQuestion={guiltyQuestion}
           setCharacterAnswer={setCharacterAnswer}
           setCharacterQuestion={setCharacterQuestion}
           setCurrentPage={setCurrentPage}
-          setGuiltyAnswer={setGuiltyAnswer}
-          setGuiltyQuestion={setGuiltyQuestion}
           levelOfDifficulty={levelOfDifficulty}
           setLevelOfDifficulty={setLevelOfDifficulty}
         />
