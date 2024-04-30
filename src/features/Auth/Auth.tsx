@@ -56,26 +56,27 @@ export default function Auth() {
         return;
       }
       if (type === "registration") {
-        const data = await axios
+        const res = await axios
           .post("http://localhost:8080/api/v1/auth/registration", {
             username,
             password,
             role,
           })
-          .then((res) => res);
-        console.log(data.data);
+          .then((r) => r.data);
+        localStorage.setItem("userId", res.id);
       } else if (type === "login") {
-        const data = await axios
+        const res = await axios
           .post("http://localhost:8080/api/v1/auth", {
             username,
             password,
           })
-          .then((res) => res);
-        console.log(data);
+          .then((r) => r.data);
+
+        localStorage.setItem("userId", res.id);
       }
-      localStorage.setItem("username", JSON.stringify(username));
-      localStorage.setItem("role", JSON.stringify(role));
-      navigate("/");
+      localStorage.setItem("username", username);
+      localStorage.setItem("role", role);
+      navigate(`/${role}`);
     } catch (error) {
       console.error(error);
     }
@@ -85,7 +86,7 @@ export default function Auth() {
     return <h2>Something went wrong</h2>;
   }
 
-  return role === "Detective" ? (
+  return role === "detective" ? (
     <>
       <DivBgColor bgColor="bg-cyan-100" />
       {isMobile ? (
@@ -147,7 +148,7 @@ export default function Auth() {
         </>
       )}
     </>
-  ) : role === "Guilty" ? (
+  ) : role === "guilty" ? (
     <>
       <DivBgColor bgColor="bg-cyan-100" />
       {isMobile ? (
